@@ -43,6 +43,10 @@ const TTSPlayground = () => {
     populateVoiceList();
   }, []);
 
+  const getTTSGoogleVoices = async () => {
+
+  }
+
   return (
     <div
       className={"grid grid-cols-2 gap-3"}
