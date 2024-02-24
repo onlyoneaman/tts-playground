@@ -1,21 +1,44 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {SpeechSynthesisVoice} from "../../../types/main.js";
 
 const TTSPlayground = () => {
   const [text, setText] = useState('');
+
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
 
   const isPlayButtonActive = () => {
     return text.length > 0;
   }
 
+  const changeVoice = (voiceName: string) => {
+    const voice = voices.find((voice) => voice.name === voiceName);
+    setSelectedVoice(voice);
+  }
+
   const speak = () => {
-    if(!isPlayButtonActive()) {
+    if (!isPlayButtonActive()) {
       window.alert("Please enter some text to play")
       return;
     }
     const synth = window.speechSynthesis;
     const utterThis = new SpeechSynthesisUtterance(text);
+    utterThis.voice = selectedVoice;
     synth.speak(utterThis);
   }
+
+  const populateVoiceList = () => {
+    const synth = window.speechSynthesis;
+    const voices = synth.getVoices();
+    setVoices(voices);
+    if (voices.length > 0) {
+      setSelectedVoice(voices[0]);
+    }
+  }
+
+  useEffect(() => {
+    populateVoiceList();
+  }, []);
 
   return (
     <div>
@@ -50,6 +73,31 @@ const TTSPlayground = () => {
           >
             Play
           </button>
+        </div>
+
+        <div>
+          <select
+            className={"border p-2 w-full mt-2 max-w-xs rounded max-h-12"}
+            onChange={(e) => {
+              const voiceName = e.target.value;
+              changeVoice(voiceName);
+            }}
+            value={selectedVoice?.name}
+          >
+            {
+              voices.map((voice, index) => {
+                return (
+                  <option
+                    key={index}
+                    title={voice.name}
+                    value={voice.name}
+                  >
+                    {voice.name}
+                  </option>
+                )
+              })
+            }
+          </select>
         </div>
       </div>
     </div>
