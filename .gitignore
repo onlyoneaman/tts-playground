@@ -4,3 +4,8 @@
 coverage/
 dist/
 tsconfig.tsbuildinfo
+
+.code/
+.idea/
+.env
+
