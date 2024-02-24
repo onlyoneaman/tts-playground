@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {SpeechSynthesisVoice} from "../../../types/main.js";
+import {SpeechSynthesisVoice} from "../../../types/main.ts";
 
 const TTSPlayground = () => {
   const [text, setText] = useState('');
@@ -13,6 +13,9 @@ const TTSPlayground = () => {
 
   const changeVoice = (voiceName: string) => {
     const voice = voices.find((voice) => voice.name === voiceName);
+    if (!voice) {
+      return;
+    }
     setSelectedVoice(voice);
   }
 
@@ -41,47 +44,45 @@ const TTSPlayground = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <h1 className={"text-2xl"}>
-          Text to Speech Playground
-        </h1>
-        <p className={"text-gray-600"}>
-          This is a playground for the Text to Speech API.
-        </p>
-      </div>
+    <div
+      className={"grid grid-cols-2 gap-3"}
+    >
       <div>
         <div>
+          <h1 className={"text-2xl"}>
+            Text to Speech Playground
+          </h1>
+          <p className={"text-gray-600"}>
+            This is a playground for the Text to Speech API.
+          </p>
+        </div>
+        <div>
+          <div>
           <textarea
             className={"border p-2 w-full"}
             onChange={(e) => setText(e.target.value)}
             placeholder="Enter text to convert to speech"
+            rows={5}
             value={text}
           />
-          <span>
-            {`Characters: ${text.length}`}
-          </span>
+            <span
+              className={"text-gray-600 text-sm"}
+            >
+              {`Characters: ${text.length}`}
+            </span>
+          </div>
         </div>
       </div>
 
-      <div>
-        <div>
-          <button
-            className={"bg-blue-500 text-white p-2 rounded disabled:bg-gray-300 disabled:text-gray-600"}
-            disabled={!isPlayButtonActive()}
-            onClick={speak}
-          >
-            Play
-          </button>
-        </div>
-
+      <div className={"space-y-3"}>
         <div>
           <select
-            className={"border p-2 w-full mt-2 max-w-xs rounded max-h-12"}
+            className={"border p-2 w-full max-w-xs rounded max-h-12"}
             onChange={(e) => {
               const voiceName = e.target.value;
               changeVoice(voiceName);
             }}
+            title="Select a voice"
             value={selectedVoice?.name}
           >
             {
@@ -98,6 +99,16 @@ const TTSPlayground = () => {
               })
             }
           </select>
+        </div>
+
+        <div>
+          <button
+            className={"bg-blue-500 text-white p-2 rounded disabled:bg-gray-300 disabled:text-gray-600"}
+            disabled={!isPlayButtonActive()}
+            onClick={speak}
+          >
+            Play
+          </button>
         </div>
       </div>
     </div>
