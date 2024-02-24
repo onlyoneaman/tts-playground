@@ -6,7 +6,11 @@ const Layout = ({children}) => {
   return (
     <div className={"flex flex-col min-h-screen bg-white text-black"}>
       <Header/>
-      <main className={"grow"}>{children}</main>
+      <main
+        className={"grow p-3"}
+      >
+        {children}
+      </main>
       <Footer/>
     </div>
   )

@@ -1,3 +1,3 @@
-import TTSPlayground from "./TTSPlayground.js";
+import TTSPlayground from "./TTSPlayground.tsx";
 
 export default TTSPlayground;
