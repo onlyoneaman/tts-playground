@@ -15,4 +15,4 @@ frontend/dist/
 frontend/tsconfig.tsbuildinfo
 
 .venv/
-backend/__pycache__/
+**/*/__pycache__/
