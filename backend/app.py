@@ -1,18 +1,29 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
+from flask_cors import CORS
 from dotenv import load_dotenv
 from helpers.azure_tts import get_voices
+from helpers.api_helpers import CustomEncoder
 import json
-from azure.cognitiveservices.speech import SynthesisVoiceGender, SynthesisVoiceType
+import logging
 
 load_dotenv()
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
+
+CORS(app)
 
 PORT = 5002
+
+api = Blueprint('api', __name__)
 
 @app.route('/')
 def home():
     return 'Hello, World!'
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({'status': 'UP'}), 200
 
 @app.route('/voices', methods=['GET'])
 def voices():
@@ -40,13 +51,14 @@ def tts():
 
     return jsonify({'message': tts_response})
 
-class CustomEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, SynthesisVoiceGender):
-            return o.name
-        if isinstance(o, SynthesisVoiceType):
-            return o.name
-        return json.JSONEncoder.default(self, o)
+# Global error handler
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error(f"Unhandled exception: {str(e)}")
+    return jsonify({'error': 'An unexpected error occurred'}), 500
+
+# Register the API Blueprint
+app.register_blueprint(api, url_prefix='/api')
 
 if __name__ == '__main__':
     app.run(debug=True, port=PORT)
