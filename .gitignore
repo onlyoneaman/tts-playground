@@ -16,3 +16,5 @@ frontend/tsconfig.tsbuildinfo
 
 .venv/
 **/*/__pycache__/
+
+backend/outputs/

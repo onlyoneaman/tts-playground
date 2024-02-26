@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {SpeechSynthesisVoice} from "../../../types/main.ts";
+import { services } from "../../../services/index.ts";
 
 const TTSPlayground = () => {
   const [text, setText] = useState('');
@@ -19,33 +20,35 @@ const TTSPlayground = () => {
     setSelectedVoice(voice);
   }
 
-  const speak = () => {
-    if (!isPlayButtonActive()) {
-      window.alert("Please enter some text to play")
-      return;
+  const speak = async () => {
+    try {
+      if (!isPlayButtonActive()) {
+        window.alert("Please enter some text to play")
+        return;
+      }
+      const res = await services.ttsApis.tts({text})
+
+      console.log(res);
+      const audio = new Audio(res.data.filename);
+      audio.play();
+    } catch (e) {
+      console.error(e);
+      window.alert("Failed to play audio")
     }
-    const synth = window.speechSynthesis;
-    const utterThis = new SpeechSynthesisUtterance(text);
-    utterThis.voice = selectedVoice;
-    synth.speak(utterThis);
   }
 
-  const populateVoiceList = () => {
-    const synth = window.speechSynthesis;
-    const voices = synth.getVoices();
-    setVoices(voices);
-    if (voices.length > 0) {
-      setSelectedVoice(voices[0]);
+  const populateVoiceList = async () => {
+    const res = await services.ttsApis.getVoices({})
+    const items = res.data.items;
+    setVoices(items);
+    if (items.length > 0) {
+      setSelectedVoice(items[0]);
     }
   }
 
   useEffect(() => {
     populateVoiceList();
   }, []);
-
-  const getTTSGoogleVoices = async () => {
-
-  }
 
   return (
     <div
