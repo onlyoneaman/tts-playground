@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {SpeechSynthesisVoice} from "../../../types/main.ts";
 import {services} from "../../../services/index.ts";
+import AudioContent from "./AudioContent.tsx";
 
 const TTSPlayground = () => {
   const [providers, setProviders] = useState([
@@ -18,6 +19,8 @@ const TTSPlayground = () => {
 
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<null | typeof providers[0]>(null);
+
+  const [audioFileName, setAudioFileName] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -53,17 +56,19 @@ const TTSPlayground = () => {
       setLoading(true);
       const data = {
         text,
+        provider: selectedProvider?.name,
         voice: selectedVoice?.name
       }
       const res = await services.ttsApis.tts(data);
 
       const audio = new Audio(res.data.filename);
-      audio.play();
+      setAudioFileName(res.data.filename);
+      // audio.play();
     } catch (e) {
-      setLoading(false)
       console.error(e);
       window.alert("Failed to play audio")
     }
+    setLoading(false);
   }
 
   const populateVoiceList = async () => {
@@ -192,6 +197,10 @@ const TTSPlayground = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      <div>
+        <AudioContent fileName={audioFileName} />
       </div>
     </div>
   );
