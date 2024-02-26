@@ -10,6 +10,8 @@ output_dir = 'outputs'
 @tts_bp.route('/api/v1/tts', methods=['GET'])
 def tts():
     text = request.args.get('text')
+    model = request.args.get('model')
+    voice = request.args.get('voice')
     if not text:
         return jsonify({'error': 'No text provided'}), 400
     
@@ -23,7 +25,7 @@ def tts():
     cached = False
 
     if not cached:
-        response = supertts.tts(text)
+        response = supertts.tts(text, model = model, voice=voice)
         response.stream_to_file(filename)
 
     return jsonify({

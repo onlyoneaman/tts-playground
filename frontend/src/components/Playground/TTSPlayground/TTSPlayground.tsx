@@ -26,7 +26,11 @@ const TTSPlayground = () => {
         window.alert("Please enter some text to play")
         return;
       }
-      const res = await services.ttsApis.tts({text})
+      const data = {
+        text,
+        voice: selectedVoice?.name
+      }
+      const res = await services.ttsApis.tts(data);
 
       console.log(res);
       const audio = new Audio(res.data.filename);
