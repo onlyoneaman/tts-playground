@@ -121,7 +121,7 @@ const TTSPlayground = () => {
           <div>
             <div>
               <textarea
-                className={"border text-white dark:text-black p-2 w-full"}
+                className={"border text-black bg-gray-300 dark:bg-gray-600 dark:text-white rounded border-none p-2 w-full"}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Enter text to convert to speech"
                 rows={5}
@@ -142,7 +142,7 @@ const TTSPlayground = () => {
               Provider
             </span>
             <select
-              className={"border text-darkJungle p-2 w-full max-w-xs rounded max-h-12"}
+              className={"border-none text-black bg-gray-300 dark:bg-gray-600 dark:text-white p-2 w-full max-w-xs rounded max-h-12"}
               onChange={(e) => {
                 const provider = providers.find((provider) => provider.name === e.target.value);
                 selectProvider(provider);
@@ -167,11 +167,11 @@ const TTSPlayground = () => {
           </div>
 
           <div>
-            <span className={"text-xs block text-gray-500 lowercase leading-none"}>
+            <span className={"text-xs block text-gray-500 dark:text-gray-200 lowercase leading-none"}>
               Voice
             </span>
             <select
-              className={"border text-darkJungle p-2 w-full max-w-xs rounded max-h-12"}
+              className={"border-none text-black bg-gray-300 dark:bg-gray-600 dark:text-white p-2 w-full max-w-xs rounded max-h-12"}
               onChange={(e) => {
                 const voiceName = e.target.value;
                 changeVoice(voiceName);
@@ -185,7 +185,7 @@ const TTSPlayground = () => {
 
           <div>
             <button
-              className={"bg-blue-500 text-white p-2 rounded disabled:bg-gray-300 disabled:text-gray-600"}
+              className={"bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600"}
               disabled={!isPlayButtonActive()}
               onClick={speak}
             >
