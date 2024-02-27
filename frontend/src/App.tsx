@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Layout from "./components/layout/Layout.js";
-import TTSPlayground from "./components/Playground/TTSPlayground/TTSPlayground.tsx";
+import Layout from "./components/layout/Layout.tsx";
 import { helpers } from "./helpers/index.ts";
+import Home from "./components/Home.tsx";
 
 export default function App() {
   const [init, setInit] = useState(true);
@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <Layout>
-      <TTSPlayground />
+      <Home />
     </Layout>
   );
 }
