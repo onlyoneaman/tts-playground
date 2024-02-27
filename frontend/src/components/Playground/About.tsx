@@ -27,6 +27,17 @@ const About = () => {
         TTS Playground is open source and available on GitHub.
       </p>
 
+      <p>
+        <span>
+          Content generated using TTS Playground can be redistributed and used for commercial purposes, no licenses
+          required.
+        </span>
+
+        <span>
+          All Intellectual Property rights, including copyright, belong to you.
+        </span>
+      </p>
+
     </div>
   )
 };
