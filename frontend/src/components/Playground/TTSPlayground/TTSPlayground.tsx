@@ -40,7 +40,7 @@ const TTSPlayground = () => {
       return;
     }
     const voiceItem = providers.find((voiceItem) => voiceItem.name === selectedProvider?.name);
-    const voice = voiceItem?.voices?.find((voice) => voice.name === voiceName);
+    const voice = voiceItem?.voices?.find((voice) => voice?.name === voiceName);
     if (!voice) {
       return;
     }
@@ -55,15 +55,13 @@ const TTSPlayground = () => {
       }
       setLoading(true);
       const data = {
-        text,
         provider: selectedProvider?.name,
+        text,
         voice: selectedVoice?.name
       }
       const res = await services.ttsApis.tts(data);
 
-      const audio = new Audio(res.data.filename);
       setAudioFileName(res.data.filename);
-      // audio.play();
     } catch (e) {
       console.error(e);
       window.alert("Failed to play audio")
@@ -82,7 +80,7 @@ const TTSPlayground = () => {
   }
 
   const mount = async () => {
-    await populateVoiceList();  
+    await populateVoiceList();
   }
 
   useEffect(() => {
@@ -90,16 +88,16 @@ const TTSPlayground = () => {
   }, []);
 
   const voiceOptions = () => {
-    const items = selectedProvider?.voices || 
-    providers.find((voiceItem) => voiceItem.name === selectedProvider?.name)?.voices || [];
-    return(
+    const items = selectedProvider?.voices ||
+      providers.find((voiceItem) => voiceItem.name === selectedProvider?.name)?.voices || [];
+    return (
       items.map((voice, index) => (
         <option
           key={index}
-          title={voice.name}
-          value={voice.name}
+          title={voice?.name}
+          value={voice?.name}
         >
-          {voice.name}
+          {voice?.name}
         </option>
       ))
     )
@@ -124,29 +122,29 @@ const TTSPlayground = () => {
         <div>
           <div>
             <div>
-          <textarea
-            className={"border p-2 w-full"}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Enter text to convert to speech"
-            rows={5}
-            value={text}
-          />
+              <textarea
+                className={"border p-2 w-full"}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Enter text to convert to speech"
+                rows={5}
+                value={text}
+              />
               <span
                 className={"text-gray-600 text-sm"}
               >
-              {`Characters: ${text.length}`}
-            </span>
+                {`Characters: ${text.length}`}
+              </span>
             </div>
           </div>
         </div>
 
         <div className={"space-y-3"}>
           <div>
-            <span className={"text-xs text-gray-500 lowercase leading-none"}>
+            <span className={"text-xs block text-gray-500 lowercase leading-none"}>
               Provider
             </span>
             <select
-              className={"border p-1 w-full max-w-xs rounded max-h-12"}
+              className={"border p-2 w-full max-w-xs rounded max-h-12"}
               onChange={(e) => {
                 const provider = providers.find((provider) => provider.name === e.target.value);
                 selectProvider(provider);
@@ -171,7 +169,7 @@ const TTSPlayground = () => {
           </div>
 
           <div>
-            <span className={"text-xs text-gray-500 lowercase leading-none"}>
+            <span className={"text-xs block text-gray-500 lowercase leading-none"}>
               Voice
             </span>
             <select
@@ -193,14 +191,14 @@ const TTSPlayground = () => {
               disabled={!isPlayButtonActive()}
               onClick={speak}
             >
-              Play
+              {loading ? "Loading..." : "Play"}
             </button>
           </div>
         </div>
       </div>
 
       <div>
-        <AudioContent fileName={audioFileName} />
+        <AudioContent fileName={audioFileName}/>
       </div>
     </div>
   );
