@@ -116,15 +116,15 @@ const TTSPlayground = () => {
         </div>
       </div>
 
-      <div className={"grid grid-cols-2 gap-3"}>
-        <div>
+      <div className={"grid grid-col-2 lg:grid-cols-3 gap-3"}>
+        <div className={"col-span-1 lg:col-span-2"}>
           <div>
             <div>
               <textarea
                 className={"border text-black bg-gray-300 dark:bg-gray-600 dark:text-white rounded border-none p-2 w-full"}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Enter text to convert to speech"
-                rows={5}
+                rows={7}
                 value={text}
               />
               <span
@@ -137,12 +137,12 @@ const TTSPlayground = () => {
         </div>
 
         <div className={"space-y-3"}>
-          <div>
+          <div className={""}>
             <span className={"text-xs block text-gray-500 dark:text-gray-200 lowercase leading-none"}>
               Provider
             </span>
             <select
-              className={"border-none text-black bg-gray-300 dark:bg-gray-600 dark:text-white p-2 w-full max-w-xs rounded max-h-12"}
+              className={"w-full cursor-pointer border-none text-black bg-gray-300 dark:bg-gray-600 dark:text-white p-2 rounded max-h-12"}
               onChange={(e) => {
                 const provider = providers.find((provider) => provider.name === e.target.value);
                 selectProvider(provider);
@@ -171,7 +171,7 @@ const TTSPlayground = () => {
               Voice
             </span>
             <select
-              className={"border-none text-black bg-gray-300 dark:bg-gray-600 dark:text-white p-2 w-full max-w-xs rounded max-h-12"}
+              className={"border-none cursor-pointer text-black bg-gray-300 dark:bg-gray-600 dark:text-white p-2 w-full rounded max-h-12"}
               onChange={(e) => {
                 const voiceName = e.target.value;
                 changeVoice(voiceName);
@@ -185,11 +185,11 @@ const TTSPlayground = () => {
 
           <div>
             <button
-              className={"bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600"}
+              className={"w-full bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300 disabled:text-gray-600"}
               disabled={!isPlayButtonActive()}
               onClick={speak}
             >
-              {loading ? "Loading..." : "Play"}
+              {loading ? "Loading..." : "Convert Now"}
             </button>
           </div>
         </div>
