@@ -6,12 +6,10 @@ import AudioContent from "./AudioContent.tsx";
 const TTSPlayground = () => {
   const [providers, setProviders] = useState([
     {
-      name: "openai",
-      voices: []
+      name: "openai", voices: []
     },
     {
-      name: "azure",
-      voices: []
+      name: "azure", voices: []
     },
   ])
 
@@ -112,7 +110,7 @@ const TTSPlayground = () => {
           <h1 className={"text-2xl"}>
             Text to Speech Playground
           </h1>
-          <p className={"text-gray-600"}>
+          <p className={"text-gray-600 dark:text-gray-400"}>
             This is a playground for the Text to Speech API.
           </p>
         </div>
@@ -123,14 +121,14 @@ const TTSPlayground = () => {
           <div>
             <div>
               <textarea
-                className={"border p-2 w-full"}
+                className={"border text-white dark:text-black p-2 w-full"}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Enter text to convert to speech"
                 rows={5}
                 value={text}
               />
               <span
-                className={"text-gray-600 text-sm"}
+                className={"text-gray-600 dark:text-gray-400 text-sm"}
               >
                 {`Characters: ${text.length}`}
               </span>
@@ -140,11 +138,11 @@ const TTSPlayground = () => {
 
         <div className={"space-y-3"}>
           <div>
-            <span className={"text-xs block text-gray-500 lowercase leading-none"}>
+            <span className={"text-xs block text-gray-500 dark:text-gray-200 lowercase leading-none"}>
               Provider
             </span>
             <select
-              className={"border p-2 w-full max-w-xs rounded max-h-12"}
+              className={"border text-darkJungle p-2 w-full max-w-xs rounded max-h-12"}
               onChange={(e) => {
                 const provider = providers.find((provider) => provider.name === e.target.value);
                 selectProvider(provider);
@@ -173,7 +171,7 @@ const TTSPlayground = () => {
               Voice
             </span>
             <select
-              className={"border p-2 w-full max-w-xs rounded max-h-12"}
+              className={"border text-darkJungle p-2 w-full max-w-xs rounded max-h-12"}
               onChange={(e) => {
                 const voiceName = e.target.value;
                 changeVoice(voiceName);

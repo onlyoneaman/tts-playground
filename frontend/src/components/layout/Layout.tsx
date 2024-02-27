@@ -1,15 +1,17 @@
-import Header from "./Header.js";
-import Footer from "./Footer.js";
+import Header from "./Header.tsx";
+import Footer from "./Footer.tsx";
 
 const Layout = ({children}) => {
 
   return (
-    <div className={"flex flex-col min-h-screen bg-white text-black"}>
+    <div className={"flex flex-col min-h-screen bg-white dark:bg-darkJungle text-darkJungle dark:text-white"}>
       <Header/>
       <main
-        className={"grow p-3"}
+        className={"flex justify-center grow p-3"}
       >
-        {children}
+        <div className={"container"}>
+          {children}
+        </div>
       </main>
       <Footer/>
     </div>

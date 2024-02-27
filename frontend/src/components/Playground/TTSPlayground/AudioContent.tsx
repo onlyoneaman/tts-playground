@@ -9,7 +9,7 @@ const AudioContent = ({fileName}: AudioContentProps) => {
   }
 
   return (
-    <div>
+    <div className={"w-full"}>
       <audio controls>
         <source
           src={fileName}

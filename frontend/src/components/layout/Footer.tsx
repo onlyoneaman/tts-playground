@@ -1,9 +1,11 @@
 const Footer = () => {
   return (
     <footer
-      className={"bg-gray-300 p-4 text-center"}
+      className={"flex justify-center bg-gray-300 text-darkJungle dark:bg-darkJungle dark:text-white border-t border-0 p-4 text-center"}
     >
-      <p>© {`${new Date().getFullYear()}`} TTS Playground </p>
+      <div className={"container text-xs"}>
+        <p>© {`${new Date().getFullYear()}`} TTS Playground </p>
+      </div>
     </footer>
   )
 };
