@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -23,18 +24,22 @@ const Header = () => {
       <div className={"container"}>
         <div className={"flex justify-between items-center"}>
           <div>
-            <h1>
+            <Link to={"/"}>
               TTS Playground
-            </h1>
+            </Link>
           </div>
           <div>
             <nav>
               <ul className={"flex items-center justify-center space-x-4"}>
                 <li>
-                  <a href={"/"}>Home</a>
+                  <Link to={"/"}>
+                    Home
+                  </Link>
                 </li>
                 <li>
-                  <a href={"/about"}>About</a>
+                  <Link to={"/about"}>
+                    About
+                  </Link>
                 </li>
                 <li>
                   <button
