@@ -13,7 +13,7 @@ const TTSPlayground = () => {
     },
   ])
 
-  const [text, setText] = useState('');
+  const [text, setText] = useState('Hello');
 
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<null | typeof providers[0]>(null);
@@ -21,6 +21,10 @@ const TTSPlayground = () => {
   const [audioFileName, setAudioFileName] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
+
+  const clearAudio = () => {
+    setAudioFileName(null);
+  }
 
   const isPlayButtonActive = () => {
     if (loading) {
@@ -37,6 +41,7 @@ const TTSPlayground = () => {
     if (loading) {
       return;
     }
+    clearAudio();
     const voiceItem = providers.find((voiceItem) => voiceItem.name === selectedProvider?.name);
     const voice = voiceItem?.voices?.find((voice) => voice?.name === voiceName);
     if (!voice) {
@@ -45,12 +50,18 @@ const TTSPlayground = () => {
     setSelectedVoice(voice);
   }
 
+  const changeText = (newText: string) => {
+    clearAudio();
+    setText(newText);
+  }
+
   const speak = async () => {
     try {
       if (!isPlayButtonActive()) {
         window.alert("Please enter some text to play")
         return;
       }
+      clearAudio();
       setLoading(true);
       const data = {
         provider: selectedProvider?.name,
@@ -122,7 +133,7 @@ const TTSPlayground = () => {
             <div>
               <textarea
                 className={"border text-black bg-gray-300 dark:bg-gray-600 dark:text-white rounded border-none p-2 w-full"}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => changeText(e.target.value)}
                 placeholder="Enter text to convert to speech"
                 rows={7}
                 value={text}
